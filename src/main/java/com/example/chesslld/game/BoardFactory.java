@@ -1,0 +1,100 @@
+package com.example.chesslld.game;
+
+import com.example.chesslld.models.Board.ChessBoard;
+import com.example.chesslld.models.Pieces.*;
+
+import java.util.*;
+
+public class BoardFactory {
+
+    public static Map<PieceName, ChessPiece> whitePieces;
+    public static Map<PieceName, ChessPiece> blackPieces;
+
+    public static Map<PieceName, ChessPiece> prepareWhitePieces(){
+        whitePieces = getPieces(Color.WHITE);
+        return whitePieces;
+    }
+
+    public static Map<PieceName, ChessPiece> prepareBlackPieces(){
+        blackPieces = getPieces(Color.BLACK);
+        return blackPieces;
+    }
+
+    public static void prepareBoardByPlacingPieces(ChessBoard board){
+        if(whitePieces == null || blackPieces == null){
+            throw new RuntimeException("Pieces not initialized");
+        }
+        placeRook(board, whitePieces, Color.WHITE);
+        placeRook(board, blackPieces, Color.BLACK);
+        placeKings(board, whitePieces, Color.WHITE);
+        placeKings(board, blackPieces, Color.BLACK);
+        placeBishops(board, whitePieces, Color.WHITE);
+        placeBishops(board, blackPieces, Color.BLACK);
+        placeKnights(board, whitePieces, Color.WHITE);
+        placeKnights(board, blackPieces, Color.BLACK);
+        placeQueens(board, whitePieces, Color.WHITE);
+        placeQueens(board, blackPieces, Color.BLACK);
+        placePawns(board, whitePieces, Color.WHITE);
+        placePawns(board, blackPieces, Color.BLACK);
+
+    }
+
+    private static void placePawns(ChessBoard board, Map<PieceName, ChessPiece> pieces, Color color){
+        int row = (color == Color.WHITE) ? 1 : 6;
+        List<PieceName> pawns = Arrays.asList(PieceName.PAWN1, PieceName.PAWN2, PieceName.PAWN3, PieceName.PAWN4, PieceName.PAWN5, PieceName.PAWN6, PieceName.PAWN7, PieceName.PAWN8);
+        for(int col =0; col< 8; col++){
+            board.setPiece(pieces.get(pawns.get(col)), row, (char)(col + 'a'));
+        }
+    }
+
+    private static void placeRook(ChessBoard board, Map<PieceName, ChessPiece> pieces, Color color){
+        int row = color == Color.WHITE ? 0 : 7;
+        board.setPiece(pieces.get(PieceName.ROOK1), row, 'a');
+        board.setPiece(pieces.get(PieceName.ROOK2), row, 'h');
+    }
+
+    private static void placeKings(ChessBoard board, Map<PieceName, ChessPiece> pieces, Color color){
+        int row = color == Color.WHITE ? 0 : 7;
+        board.setPiece(pieces.get(PieceName.KING), row, 'e');
+    }
+
+    private static void placeBishops(ChessBoard board, Map<PieceName, ChessPiece> pieces, Color color){
+        int row = color == Color.WHITE ? 0 : 7;
+        board.setPiece(pieces.get(PieceName.BISHOP1), row, 'c');
+        board.setPiece(pieces.get(PieceName.BISHOP2), row, 'f');
+    }
+
+    private static void placeKnights(ChessBoard board, Map<PieceName, ChessPiece> pieces, Color color){
+        int row = color == Color.WHITE ? 0 : 7;
+        board.setPiece(pieces.get(PieceName.KNIGHT1), row, 'b');
+        board.setPiece(pieces.get(PieceName.KNIGHT2), row, 'g');
+    }
+
+    private static void placeQueens(ChessBoard board, Map<PieceName, ChessPiece> pieces, Color color){
+        int row = color == Color.WHITE ? 0 : 7;
+        board.setPiece(pieces.get(PieceName.QUEEN), row, 'd');
+    }
+
+    public static Map<PieceName, ChessPiece> getPieces(Color color){
+        Map<PieceName, ChessPiece> pieces = new HashMap<>();
+
+        pieces.put(PieceName.PAWN1, new Pawn(PieceName.PAWN1, color, color.toString().charAt(0) + "P1"));
+        pieces.put(PieceName.PAWN2, new Pawn(PieceName.PAWN2, color, color.toString().charAt(0) + "P2"));
+        pieces.put(PieceName.PAWN3, new Pawn(PieceName.PAWN3, color, color.toString().charAt(0) + "P3"));
+        pieces.put(PieceName.PAWN4, new Pawn(PieceName.PAWN4, color, color.toString().charAt(0) + "P4"));
+        pieces.put(PieceName.PAWN5, new Pawn(PieceName.PAWN5, color, color.toString().charAt(0) + "P5"));
+        pieces.put(PieceName.PAWN6, new Pawn(PieceName.PAWN6, color, color.toString().charAt(0) + "P6"));
+        pieces.put(PieceName.PAWN7, new Pawn(PieceName.PAWN7, color, color.toString().charAt(0) + "P7"));
+        pieces.put(PieceName.PAWN8, new Pawn(PieceName.PAWN8, color, color.toString().charAt(0) + "P8"));
+        pieces.put(PieceName.ROOK1, new Rook(PieceName.ROOK1, color, color.toString().charAt(0) + "R1"));
+        pieces.put(PieceName.BISHOP1, new Bishop(PieceName.BISHOP1, color, color.toString().charAt(0) + "B1"));
+        pieces.put(PieceName.KNIGHT1, new Knight(PieceName.KNIGHT1, color, color.toString().charAt(0) + "N1"));
+        pieces.put(PieceName.QUEEN, new Queen(PieceName.QUEEN, color, color.toString().charAt(0) + "Q1"));
+        pieces.put(PieceName.KING, new King(PieceName.KING, color, color.toString().charAt(0) + "K1"));
+        pieces.put(PieceName.KNIGHT2, new Knight(PieceName.KNIGHT2, color, color.toString().charAt(0) + "N2"));
+        pieces.put(PieceName.BISHOP2, new Bishop(PieceName.BISHOP2, color, color.toString().charAt(0) + "B2"));
+        pieces.put(PieceName.ROOK2, new Rook(PieceName.ROOK2, color, color.toString().charAt(0) + "R2"));
+        return pieces;
+    }
+}
+

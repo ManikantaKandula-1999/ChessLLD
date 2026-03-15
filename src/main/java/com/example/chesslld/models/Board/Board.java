@@ -7,5 +7,5 @@ public interface Board {
 
     void displayBoard();
     void applyMove(Move move);
-    void setBoard(ChessPiece piece, int row, char column);
+    void setPiece(ChessPiece piece, int row, char column);
 }
