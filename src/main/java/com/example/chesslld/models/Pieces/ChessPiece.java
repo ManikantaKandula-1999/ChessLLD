@@ -10,7 +10,7 @@ public interface ChessPiece {
     void setKilled(boolean killed);
     boolean isKilled();
     boolean canMove(Cell startCell, Cell endCell, ChessBoard board);
-    List<Move> getValidMoves(Cell cell, ChessBoard board);
+    List<Move> listPossibleMoves(Cell cell);
     boolean isMovingFirstTime();
     Color getColor();
     String getPieceSymbol();
